@@ -5,8 +5,8 @@
  ********************************************************************************
 
  Elaborato 3
- Descrizione:	Data una sequenza di bit, sapendo che ogni n bit (di dati) vi Ë
-                un bit di parit‡ (1 se il numero di bit a 1 fra i precedenti n Ë
+ Descrizione:	Data una sequenza di bit, sapendo che ogni n bit (di dati) vi √®
+                un bit di parit√† (1 se il numero di bit a 1 fra i precedenti n √®
                 dispari), verificare se vi sono errori.
 
  ********************************************************************************/
