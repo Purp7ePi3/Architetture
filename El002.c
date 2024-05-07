@@ -1,6 +1,3 @@
-//CAPIRE IN CHE PUNTO DEVO FAR TORNARE LA LA SECONDA MATRICE A PARTIRE DA 0 MA PENSO SOLO QUANDO TROVA CHE LA MAT DI 1 é MULTIPLO;IL RESTO é STORIA; CONTAOLLA BENE ANCHE 
-//IL CONTO PERCHé FATTO COSI SALTA LA LA RIGA x*n
-
 #include <stdio.h>
 
 int main() {
@@ -76,7 +73,7 @@ int main() {
         xor edx, edx
         div ebx
         test edx, edx
-        jz RIGAFINITA   // se è mutiplo di k vuol dire che la riga è finita e devo fare +1 su esi
+        jz RIGAFINITA   // se Ã¨ mutiplo di k vuol dire che la riga Ã¨ finita e devo fare +1 su esi
         jmp RIGA
 
 
