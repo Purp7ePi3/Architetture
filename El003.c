@@ -5,23 +5,24 @@
  ********************************************************************************
 
  Elaborato 3
- Descrizione:	Data una sequenza di bit, sapendo che ogni n bit (di dati) vi √®
-                un bit di parit√† (1 se il numero di bit a 1 fra i precedenti n √®
+ Descrizione:	Data una sequenza di bit, sapendo che ogni n bit (di dati) vi Ë
+                un bit di parit‡ (1 se il numero di bit a 1 fra i precedenti n Ë
                 dispari), verificare se vi sono errori.
 
- ********************************************************************************/
+ ********************************************************************************/ //0000 1100 0 00110 11000 10100
 #include <stdio.h>
 
 int main()
 {
     // Input
-    unsigned char vet[] = {3,5}; // 7 bit: 0001101
-    unsigned int len = 15;	// lunghezza (numero di bit)
+    unsigned char vet[] = { 0xE3,0xA5,0x0E,0x92,0x2F,0xB2,0x00 }; // 7 bit: 0001101
+    unsigned int len = 50;	// lunghezza (numero di bit)
     unsigned char n = 4;	// numero di bit dati
 
     // Ouput
     unsigned char errori = 0;	// 1 = errori; 0 = no errori
     int errore;
+    unsigned char parola = 2;
     __asm
     {
         xor esi, esi    // contatore per la lettera
@@ -32,24 +33,27 @@ int main()
     PS:
         mov al, [vet + esi]
         inc esi
-
+        xor ah, ah
+    
     CNF:
-        inc edi
-        cmp edi, len
-        je FINE
-        inc ah
-        cmp ah,8
+        //ci sono le condizioni di uscita
+        cmp ah, 8
         je PS
-
+        cmp edi, len
+        jg FINE
         cmp bh, n
-        je PARITA
+        jg PARITA
+       
+        inc ah        
+        inc edi
+        //controlla se l'ultimo numero Ë uno zero o un uno, incrementa solo il contatore di bh se zero altrimenti anche quello di
         test al, 1
         jnz UNO
         jz ZERO
 
     UNO:
-        inc bl
         inc bh
+        inc bl
         shr al, 1
         jmp CNF
 
@@ -58,35 +62,25 @@ int main()
         shr al, 1
         jmp CNF
 
+
     PARITA:
-        xor bh, bh
-        shr al, 1
-        test al,1 
-        jnz DISPARI
-        jz PARI
-
-    DISPARI:
-        test bl, 1
-        jz ERRORE
-        xor bl, bl
-        shr al, 1
-        jmp CNF
-
-    PARI:
+        // controlla quanti sono i bit a uno in quelli che dentro controllare, se sono dispari c'Ë un errrore, altrimenti continua
+        // dopo il controllo resetto bh e bl
         test bl, 1
         jnz ERRORE
         xor bl, bl
-        shr al, 1
-        jmp CNF
-
+        xor bh, bh
+        jz CNF
 
     ERRORE:
         mov errori, 1
     
     FINE:
         mov errore, edi
+        mov parola, ah
     }
-    printf("%d\n\n", errore);
+    printf("bit letti: %d\n", errore);
+    printf("bit letti parola: %d\n", parola);
     // Stampa su video
     printf("La sequenza di bit %scontiene errori\n", (errori ? "" : "non "));
     return 0;
